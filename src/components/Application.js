@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "components/Application.scss";
 import "components/DayList";
 import DayList from "components/DayList";
+import InterviewerListItem from "components/InterviewerListItem";
 
 const days = [
   {
@@ -21,6 +22,13 @@ const days = [
     spots: 0,
   },
 ];
+
+const interviewer = {
+  id: 1,
+  name: "Sylvia Palmer",
+  avatar: "https://i.imgur.com/LpaY82x.png"
+};
+
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
 
