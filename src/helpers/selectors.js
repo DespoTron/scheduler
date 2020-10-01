@@ -3,8 +3,6 @@ import Appointment from "components/Appointment";
 export function getAppointmentsForDay(state, day) {
   let appointments = [];
 
-
-
   for (const days of state.days) {
     if (days.name === day) {
       appointments = [...days.appointments];
