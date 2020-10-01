@@ -20,8 +20,24 @@ export default function Application(props) {
     interviewers: {},
   });
 
-  const setDay = day => setState({ ...state, day });
+  
+  const appointments = getAppointmentsForDay(state, state.day);
+  
+  const schedule = appointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+    
+    return (
+      <Appointment
+      key={appointment.id}
+      {...appointment}
+      interview={interview}
+      />
+      );
+    });  
 
+   const setDay = day => setState({ ...state, day });
+   const setDays = days => setState((prev) => ({...prev, days}));
+    
   useEffect(() => {
     Promise.all([
       axios.get('http://localhost:8080/api/days'), 
@@ -35,11 +51,12 @@ export default function Application(props) {
     });
   }, []);
   
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  // const dailyAppointments = getAppointmentsForDay(state, state.day);
+  
+  // const appointmentsList = dailyAppointments.map((appointment) => { 
+  //   const interview = getInterview(state, appointment.interview)
+  //   return (<Appointment key={appointment.id} {...appointment} />)});
 
-  const appointmentsList = dailyAppointments.map((appointment) => { 
-    const interview = getInterview(state, appointment.interview)
-    return (<Appointment key={appointment.id} {...appointment} />)});
 
   return (
     <main className="layout">
@@ -64,7 +81,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        { appointmentsList }
+        { schedule }
         <Appointment key="last" time="5pm" />
       </section>
     </main>
