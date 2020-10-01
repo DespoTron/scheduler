@@ -16,7 +16,8 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {},
   });
 
   const setDay = day => setState({ ...state, day });
@@ -30,6 +31,7 @@ export default function Application(props) {
     .then((all) => {
       const [GET_DAYS, GET_APPOINTMENTS, GET_INTERVIEWERS] = all;
       setState(prev => ({...prev, days: GET_DAYS.data, appointments: all[1].data, interviewers: GET_INTERVIEWERS.data}));
+      console.log(GET_INTERVIEWERS.data);
     });
   }, []);
   
