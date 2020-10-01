@@ -5,7 +5,7 @@ import "components/Application.scss";
 import DayList from "components/DayList";
 
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 
 export default function Application(props) {
@@ -29,13 +29,14 @@ export default function Application(props) {
     ])
     .then((all) => {
       const [GET_DAYS, GET_APPOINTMENTS, GET_INTERVIEWERS] = all;
-      setState(prev => ({...prev, days: GET_DAYS.data, appointments: all[1].data}));
+      setState(prev => ({...prev, days: GET_DAYS.data, appointments: all[1].data, interviewers: GET_INTERVIEWERS.data}));
     });
   }, []);
   
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const appointmentsList = dailyAppointments.map((appointment) => { 
+    const interview = getInterview(state, appointment.interview)
     return (<Appointment key={appointment.id} {...appointment} />)});
 
   return (

@@ -6,10 +6,10 @@ export function getAppointmentsForDay(state, day) {
   for (const days of state.days) {
     if (days.name === day) {
       appointments = [...days.appointments];
-      console.log(appointments)
+      // console.log(appointments)
     }
   }
-  console.log("Appointemnts TOP", appointments)
+  // console.log("Appointemnts TOP", appointments)
 
   let matchingAppointments = [];
 
@@ -27,3 +27,19 @@ export function getAppointmentsForDay(state, day) {
   
   return matchingAppointments;
 };
+
+export function getInterview(state, interview) {
+  if (!interview) {
+    return null;
+  };
+
+  const interviewObj = {};
+  console.log("Interview.student", interview.student)
+  interviewObj.student = interview.student;
+  interviewObj.interviewer = state.interviewers[interview.interviewer];
+  console.log("STATE.interviewers", state.interviewers)
+  console.log("INTERVIEW.interviewes", interview.interviewer)
+  console.log("STATE", state.interviewers[interview.interviewer])
+
+  return interviewObj;
+}
