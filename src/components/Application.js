@@ -28,7 +28,8 @@ export default function Application(props) {
       axios.get('http://localhost:8080/api/interviewers')
     ])
     .then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data}));
+      const [GET_DAYS, GET_APPOINTMENTS, GET_INTERVIEWERS] = all;
+      setState(prev => ({...prev, days: GET_DAYS.data, appointments: all[1].data}));
     });
   }, []);
   
