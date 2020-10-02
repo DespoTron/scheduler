@@ -6,6 +6,7 @@ import DayList from "components/DayList";
 
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import Show from "./Appointment/Show";
 
 export default function Application(props) {
   // const [day, setDay] = useState("Monday");
@@ -19,7 +20,31 @@ export default function Application(props) {
     interviewers: {},
   });
 
+
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+
+    // We want to create a new appointment object starting with the values copied from the existing appointment
+    // We replace the current value of the interview key with the new value.
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+    // We use the update pattern to replace the existing record with the matching id
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    // Update the bookInterview function to call setState with your new state object.
+    
+    return axios.put(`/api/appointments/${id}`, appointment)
+      .then(() => {
+        return setState({...state, appointments});
+      })
+      // transition(SHOW)
+  };
   
+
   const appointments = getAppointmentsForDay(state, state.day);
   
   const schedule = appointments.map((appointment) => {
@@ -33,6 +58,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
