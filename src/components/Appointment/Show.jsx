@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Show(props) {
-  const name = props.interviewer ? props.interviewer.name : null
+  const name = props.interviewer ? props.interviewer.name : null;
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">

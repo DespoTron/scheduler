@@ -40,30 +40,52 @@ export default function useApplicationData() {
     };
     // Update the bookInterview function to call setState with your new state object.
 
-    const subtractADay = (id) => {
-      if (id >= 1 && id <= 5) {
-        --state.days[0].spots;
-      }
-      if (id >= 6 && id <= 10) {
-        --state.days[1].spots;
-      }
-      if (id >= 11 && id <= 15) {
-        --state.days[2].spots;
-      }
-      if (id >= 16 && id <= 20) {
-        --state.days[3].spots;
-      }
-      if (id >= 21 && id <= 25) {
-        --state.days[4].spots;
-      }
-    }
 
+    // const subDay = (id) => {
+    //   for (const day of state.days)
+    // }
+
+    // const subtractADay = (id) => {
+    //   if (id >= 1 && id <= 5) {
+    //     --state.days[0].spots;
+    //   }
+    //   if (id >= 6 && id <= 10) {
+    //     --state.days[1].spots;
+    //   }
+    //   if (id >= 11 && id <= 15) {
+    //     --state.days[2].spots;
+    //   }
+    //   if (id >= 16 && id <= 20) {
+    //     --state.days[3].spots;
+    //   }
+    //   if (id >= 21 && id <= 25) {
+    //     --state.days[4].spots;
+    //   }
+    // }
+
+      
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
-        subtractADay(`${id}`)
-        return setState({...state, appointments});
-      })
-
+        let days;
+        if (state.appointments[id].interview === null) {
+          if (id >= 1 && id <= 5) {
+            days = state.days.map(element => element.id === 1 ? { ...element, spots: element.spots - 1 } : element);
+          } else if (id >= 6 && id <= 10) {
+            days = state.days.map(element => element.id === 2 ? { ...element, spots: element.spots - 1 } : element);
+          } else if (id >= 11 && id <= 15) {
+            days = state.days.map(element => element.id === 3 ? { ...element, spots: element.spots - 1 } : element);
+          } else if (id >= 16 && id <= 20) {
+            days = state.days.map(element => element.id === 4 ? { ...element, spots: element.spots - 1 } : element);
+          } else if (id >= 21 && id <= 25) {
+            days = state.days.map(element => element.id === 5 ? { ...element, spots: element.spots - 1 } : element);
+          };
+        };
+        if (days) {
+          return setState({ ...state, appointments, days });
+        } else {
+          return setState({ ...state, appointments });
+        };
+      });
   };
     
   const cancelInterview = (id) => {
@@ -77,30 +99,41 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-    
-    const addDay = (id) => {
-      if (id >= 1 && id <= 5) {
-        ++state.days[0].spots;
-      }
-      if (id >= 6 && id <= 10) {
-        ++state.days[1].spots;
-      }
-      if (id >= 11 && id <= 15) {
-        ++state.days[2].spots;
-      }
-      if (id >= 16 && id <= 20) {
-        ++state.days[3].spots;
-      }
-      if (id >= 21 && id <= 25) {
-        ++state.days[4].spots;
-      }
-    }
 
-    return axios.delete(`/api/appointments/${id}`)
-    .then(() => {
-      addDay(`${id}`)
-      return setState({...state, appointments})
-    })
+    // const addDay = (id) => {
+    //   if (id >= 1 && id <= 5) {
+    //     ++state.days[0].spots;
+    //   }
+    //   if (id >= 6 && id <= 10) {
+    //     ++state.days[1].spots;
+    //   }
+    //   if (id >= 11 && id <= 15) {
+    //     ++state.days[2].spots;
+    //   }
+    //   if (id >= 16 && id <= 20) {
+    //     ++state.days[3].spots;
+    //   }
+    //   if (id >= 21 && id <= 25) {
+    //     ++state.days[4].spots;
+    //   }
+    // }
+
+    return axios.delete(`/api/appointments/${id}`, appointment)
+      .then(() => {
+        let days;
+        if (id >= 1 && id <= 5) {
+          days = state.days.map(element => element.id === 1 ? { ...element, spots: element.spots + 1 } : element);
+        } else if (id >= 6 && id <= 10) {
+          days = state.days.map(element => element.id === 2 ? { ...element, spots: element.spots + 1 } : element);
+        } else if (id >= 11 && id <= 15) {
+          days = state.days.map(element => element.id === 3 ? { ...element, spots: element.spots + 1 } : element);
+        } else if (id >= 16 && id <= 20) {
+          days = state.days.map(element => element.id === 4 ? { ...element, spots: element.spots + 1 } : element);
+        } else if (id >= 21 && id <= 25) {
+          days = state.days.map(element => element.id === 5 ? { ...element, spots: element.spots + 1 } : element);
+        };
+        return setState({ ...state, appointments, days });
+      });
   }
 
   return { state, setDay, bookInterview, cancelInterview};
