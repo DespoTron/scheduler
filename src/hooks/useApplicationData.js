@@ -30,26 +30,26 @@ const reducer = (state, action) => {
       };
       
       
-      console.log("APPOINTMENT SPREAD", appointment)
+      // console.log("APPOINTMENT SPREAD", appointment)
       
       const appointments = {
         ...state.appointments,
         [id]: appointment,
       };   
       
-      console.log("APOINTSSSSS SPREAD", appointments)
+      // console.log("APOINTSSSSS SPREAD", appointments)
       
       const foundDay = state.days.find((day) => day.appointments.includes(id));
       // 
       const days = state.days.map((day) => {
         // console.log("STATE APPOINTMENTS ID INTEVIEW", state.appointments[id].interview)
         if (day.name === foundDay.name && state.appointments[id].interview === null ) {
-          console.log("DAY NAME", day.name)
-          console.log("FOUND NAME", foundDay.name)
-          console.log("STATE APPOINTSMENTS" , state.appointments)
-          console.log("ID", state.appointments[id])
-          console.log("INTERVIEW", state.appointments[id].interview)
-          console.log("DAY LIST", {...day})
+          // console.log("DAY NAME", day.name)
+          // console.log("FOUND NAME", foundDay.name)
+          // console.log("STATE APPOINTSMENTS" , state.appointments)
+          // console.log("ID", state.appointments[id])
+          // console.log("INTERVIEW", state.appointments[id].interview)
+          // console.log("DAY LIST", {...day})
           return { ...day, spots: interview ? day.spots - 1 : day.spots + 1};
         } else {
           return day;

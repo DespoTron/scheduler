@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText } from "@testing-library/react";
+import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText } from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -30,13 +30,13 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-    const { container } = render(<Application />)
+    const { container, debug } = render(<Application />)
     
     await waitForElement(() => getByText(container, "Archie Cohen"))
     
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];
-
+``
     // console.log(prettyDOM(container));
     
     fireEvent.click(getByAltText(appointment, "Add"));
@@ -49,7 +49,20 @@ describe("Application", () => {
     
     fireEvent.click(getByText(appointment, "Save"));    
 
-    console.log(prettyDOM(appointments));
+    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+    // expect(getByText(appointment, "SAVING")).not.toBeInTheDocument(); // fails test because SAVING is in document
+
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones")); //can provide a helpful message if we use Jest timeout
+    // await waitForElement(() => queryByText(appointment, "Lydia Miller-Jones")); // Using query will return a null value when we dont find matching element
+
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+      
+    // console.log(prettyDOM(day));
+    // console.log(prettyDOM(appointments));
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();      
+    // debug()
   })
 
 });
