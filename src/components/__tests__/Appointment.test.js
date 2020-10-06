@@ -21,8 +21,8 @@ import Application from "components/Application";
 import '@testing-library/jest-dom';
 import Appointment from 'components/Appointment';
 
-describe("Appointment", () => {
-  it("renders without crashing", () => {
-    render(<Appointment />);
-  });
-});
+// describe("Appointment", () => {
+//   it("renders without crashing", () => {
+//     render(<Appointment />);
+//   });
+// });
