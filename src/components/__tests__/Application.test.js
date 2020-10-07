@@ -124,9 +124,27 @@ describe("Application", () => {
     );
 
     fireEvent.click(queryByAltText(appointment, "Edit"));
+    
+    console.log(prettyDOM(container))
 
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    })
 
-    debug();
+		fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+		fireEvent.click(getByText(appointment, "Save"));
+
+		expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
+		const day = getAllByTestId(container, "day").find(day =>
+			queryByText(day, "Monday")
+		);
+
+		expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    // debug();
   });
 
 });
