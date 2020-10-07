@@ -181,6 +181,28 @@ describe("Application", () => {
     axios.delete.mockRejectedValueOnce();
 
     const { container, debug} = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    expect(
+      getByText(appointment, "Are you sure you would like to delete?")
+    ).toBeInTheDocument();
+  
+    // 5. Click the "Confirm" button on the confirmation.
+    fireEvent.click(queryByText(appointment, "Confirm"));
+  
+    // 6. Check that the element with the text "Deleting" is displayed.
+    expect(getByText(appointment, "DELETING")).toBeInTheDocument();
+
+		await waitForElement(() =>
+			queryByText(appointment, "Could not cancel appointment")
+    );    
   });
 
 });
