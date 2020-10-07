@@ -39,7 +39,7 @@ describe("Appointments", () => {
     cy.contains(".appointment__card--show", "Sylvia Palmer");
   });
 
-  it("should edit an interview", () => {
+  xit("should edit an interview", () => {
     cy.get("[alt=Add]")
     .first()
     .click();    
@@ -56,23 +56,41 @@ describe("Appointments", () => {
     cy.contains(".appointment__card--show", "Lydia Miller-Jones");
     cy.contains(".appointment__card--show", "Sylvia Palmer");
     
-    cy.get("[alt=Edit]").first().click({ force: true });
 
+    // Clicks the edit button for the existing appointment
+    cy.get("[alt=Edit]")
+      .first()
+      .click({ force: true });
+    
+    // Changes the name and interviewer
     cy.get("[data-testid=student-name-input]")
       .clear()
       .type("Lydia Miller-Jones");
     cy.get("[alt='Tori Malcolm']").click();
 
+    // Clicks the save button
     cy.contains("Save").click();
 
+    // Sees the edit to the appointment    
     cy.contains(".appointment__card--show", "Lydia Miller-Jones");
     cy.contains(".appointment__card--show", "Tori Malcolm");    
-    
+  });
 
-    // Clicks the edit button for the existing appointment
-    // Changes the name and interviewer
-    // Clicks the save button
-    // Sees the edit to the appointment    
+  it("should cancel an interview", () => {
+    // Clicks the delete button for the existing appointment
+    cy.get("[alt=Delete]") 
+    .first()
+    .click({ force: true });
+
+    // Clicks the confirm button
+    cy.contains("Confirm")
+    .click();
+
+    // Sees that the appointment slot is empty    
+    cy.contains("DELETING").should("exist");
+    cy.contains("DELETING").should("not.exist");
+
+    cy.contains(".appointment__card--show", "Archie Cohen").should("not.exist");
   });
 
 });
