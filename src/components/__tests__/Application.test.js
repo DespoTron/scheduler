@@ -48,7 +48,7 @@ describe("Application", () => {
     
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];
-``
+    
     // console.log(prettyDOM(container));
     
     fireEvent.click(getByAltText(appointment, "Add"));
@@ -170,7 +170,7 @@ describe("Application", () => {
 
     expect(getByText(appointment, "SAVING")).toBeInTheDocument();
 
-		await waitForElement(() =>
+    await waitForElement(() =>
 			queryByText(appointment, "Could not save appointment")
     );
     
