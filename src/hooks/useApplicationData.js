@@ -23,12 +23,12 @@ const reducer = (state, action) => {
     }
     case SET_INTERVIEW: {
       const { id, interview } = action
-      
+      // console.log("ARE YOU NULL", interview)
       const appointment = {
         ...state.appointments[id],
-        interview: { ...interview },
+        interview: interview ? { ...interview } : null, // IN HONOUR OF MANALI
+        // interview: interview && {...interview}
       };
-      
       
       // console.log("APPOINTMENT SPREAD", appointment)
       
@@ -39,22 +39,45 @@ const reducer = (state, action) => {
       
       // console.log("APOINTSSSSS SPREAD", appointments)
       
-      const foundDay = state.days.find((day) => day.appointments.includes(id));
+      // const foundDay = state.days.find((day) => day.appointments.includes(id));
       // 
+      const getSpotsForDay = (day) => {
+        const initialLength = day.appointments.length;
+        // console.log("GIVE ME MY LENGTH", initialLength)
+        const spotCounter = (count, id) =>  
+        
+        { const appointmentid = appointments[id]
+          // console.log("GIVE ME MY APPOINTMENT ID",appointmentid)
+          // if (appointmentid.interview)
+          // console.log("APPOINTMENTID INTERVIEW", Boolean(appointmentid.interview))
+          return Boolean(appointmentid.interview) ? count + 1 : count }
+
+
+
+        const reduceAppointments = day.appointments.reduce(spotCounter, 0);
+        // console.log("REDUCE APPOINTSMT WHAT", reduceAppointments)
+        return initialLength - reduceAppointments;  
+      }
+
       const days = state.days.map((day) => {
+        // console.log("ARE YOU BEING HIT", day)
+        const appointments = day.appointments.includes(id) ? {...day, spots: getSpotsForDay(day) } : day
+        // console.log("WHAT ARE YOU APPONTSMENTS", appointments)
+        return appointments;
+
+
         // console.log("STATE APPOINTMENTS ID INTEVIEW", state.appointments[id].interview)
-        // && state.appointments[id].interview === null
-        if (day.name === foundDay.name) {
-          // console.log("DAY NAME", day.name)
-          // console.log("FOUND NAME", foundDay.name)
-          // console.log("STATE APPOINTSMENTS" , state.appointments)
-          // console.log("ID", state.appointments[id])
-          // console.log("INTERVIEW", state.appointments[id].interview)
-          // console.log("DAY LIST", {...day})
-          return { ...day, spots: interview ? day.spots - 1 : day.spots + 1};
-        } else {
-          return day;
-        }
+        // if (day.name === foundDay.name && state.appointments[id].interview === null ) {
+        //   // console.log("DAY NAME", day.name)
+        //   // console.log("FOUND NAME", foundDay.name)
+        //   // console.log("STATE APPOINTSMENTS" , state.appointments)
+        //   // console.log("ID", state.appointments[id])
+        //   // console.log("INTERVIEW", state.appointments[id].interview)
+        //   // console.log("DAY LIST", {...day})
+        //   return { ...day, spots: interview ? day.spots - 1 : day.spots + 1};
+        // } else {
+        //   return day;
+        // }
       });
 
       return {...state, appointments, days}
