@@ -11,9 +11,10 @@ import {
   getByAltText, 
   getByPlaceholderText, 
   queryByText, 
-  queryByAltText } from "@testing-library/react";
+  queryByAltText, wait } from "@testing-library/react";
 
 import Application from "components/Application";
+import axios from 'axios';
 
 afterEach(cleanup);
 
@@ -111,7 +112,7 @@ describe("Application", () => {
   
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
 
-    debug();
+    // debug();
   });
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
@@ -125,7 +126,7 @@ describe("Application", () => {
 
     fireEvent.click(queryByAltText(appointment, "Edit"));
     
-    console.log(prettyDOM(container))
+    // console.log(prettyDOM(container))
 
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
@@ -145,6 +146,41 @@ describe("Application", () => {
 
 		expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
     // debug();
+  });
+
+  it("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+
+    const { container, debug } = render(<Application />);
+    
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
+		fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+    fireEvent.click(getByText(appointment, "Save"));
+
+    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+
+		await waitForElement(() =>
+			queryByText(appointment, "Could not save appointment")
+    );
+    
+    // debug();
+  });
+
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
+
+    const { container, debug} = render(<Application />);
   });
 
 });
