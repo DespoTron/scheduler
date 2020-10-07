@@ -19,8 +19,33 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
 
+  deploy:
+    machine:
+      enabled: true
+
+    working_directory: ~/client
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "87:4a:2d:25:ac:c5:ec:3e:fa:49:ee:dd:80:42:5a:7a"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/DespoTron/scheduler.git master:production      
+
 workflows:
   version: 2
-  test:
+  test_and_deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build
