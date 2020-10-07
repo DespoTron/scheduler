@@ -43,7 +43,8 @@ const reducer = (state, action) => {
       // 
       const days = state.days.map((day) => {
         // console.log("STATE APPOINTMENTS ID INTEVIEW", state.appointments[id].interview)
-        if (day.name === foundDay.name && state.appointments[id].interview === null ) {
+        // && state.appointments[id].interview === null
+        if (day.name === foundDay.name) {
           // console.log("DAY NAME", day.name)
           // console.log("FOUND NAME", foundDay.name)
           // console.log("STATE APPOINTSMENTS" , state.appointments)
