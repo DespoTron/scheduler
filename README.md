@@ -21,3 +21,9 @@ npm test
 ```sh
 npm run storybook
 ```
+## Screen Shots of Scheduler App
+
+!["Adding an interview"](https://github.com/DespoTron/scheduler/blob/master/docs/adding-interview.png?raw=true)
+!["Complete appointment form"](https://github.com/DespoTron/scheduler/blob/master/docs/appointment-form.png?raw=true)
+!["Delete confirmation"](https://github.com/DespoTron/scheduler/blob/master/docs/delete-confirmation.png?raw=true)
+!["Editing form"](https://github.com/DespoTron/scheduler/blob/master/docs/edit-form.png?raw=true)
