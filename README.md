@@ -30,6 +30,7 @@ npm run storybook
 <p>Deployed server on Heroku</p>
 <p>Created a continuous pipeline with CircleCi</p>
 <p>Deployed the Client to Netlify here's the link <a href="https://wonderful-elion-f9f0c1.netlify.app/">Scheduler App</a></p>
+<p>If the link doesn't work right away please give the server a couple minutes to boot up</p>
 
 ## Screen Shots of Scheduler App
 
