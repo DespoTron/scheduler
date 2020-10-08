@@ -36,14 +36,6 @@ export default function Application(props) {
     );
   });
 
-  
-  // const dailyAppointments = getAppointmentsForDay(state, state.day);
-  
-  // const appointmentsList = dailyAppointments.map((appointment) => { 
-  //   const interview = getInterview(state, appointment.interview)
-  //   return (<Appointment key={appointment.id} {...appointment} />)});
-
-
   return (
     <main className="layout">
       <section className="sidebar">
