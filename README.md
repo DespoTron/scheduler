@@ -33,6 +33,7 @@ npm run storybook
 
 ## Screen Shots of Scheduler App
 
+!["Self Promotion"](https://github.com/DespoTron/scheduler/blob/master/docs/Self-promo.png?raw=true)
 !["Adding an interview"](https://github.com/DespoTron/scheduler/blob/master/docs/adding-interview.png?raw=true)
 !["Complete appointment form"](https://github.com/DespoTron/scheduler/blob/master/docs/appointment-form.png?raw=true)
 !["Delete confirmation"](https://github.com/DespoTron/scheduler/blob/master/docs/delete-confirmation.png?raw=true)
